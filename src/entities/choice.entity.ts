@@ -6,10 +6,10 @@ export class ChoiceEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  test: string;
+  @Column({ nullable: false, length: 30 })
+  text: string;
 
-  @Column()
+  @Column({ nullable: false })
   score: number;
 
   @ManyToOne(() => QuestionEntity, (QuestionEntity) => QuestionEntity.id, {
