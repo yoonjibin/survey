@@ -1,0 +1,13 @@
+type Answer {
+  id: Int!
+  content: String!
+  answer: Answer!
+}
+
+type Query {
+
+}
+
+type Mutation {
+    
+}

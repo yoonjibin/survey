@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { SurveyService } from './survey.service';
-import { SurveyController } from './survey.controller';
+import { SurveyResolver } from './survey.resolver';
 
 @Module({
-  providers: [SurveyService],
-  controllers: [SurveyController]
+  providers: [SurveyService, SurveyResolver],
 })
 export class SurveyModule {}

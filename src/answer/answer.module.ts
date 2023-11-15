@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AnswerService } from './answer.service';
-import { AnswerController } from './answer.controller';
+import { AnswerResolver } from './answer.resolver';
 
 @Module({
-  providers: [AnswerService],
-  controllers: [AnswerController]
+  providers: [AnswerService, AnswerResolver],
 })
 export class AnswerModule {}

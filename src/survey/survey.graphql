@@ -1,0 +1,14 @@
+type Survey {
+  id: Int!
+  title: String!
+  isCompleted: Boolean!
+  questions: [Question!]!
+}
+
+type Query {
+
+}
+
+type Mutation {
+    
+}

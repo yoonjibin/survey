@@ -3,9 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { SurveyModule } from './survey/survey.module';
 import { QuestionModule } from './question/question.module';
-import { ChoiceController } from './choice/choice.controller';
 import { ChoiceModule } from './choice/choice.module';
 import { AnswerModule } from './answer/answer.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
@@ -24,11 +25,15 @@ import { AnswerModule } from './answer/answer.module';
       logging: true,
       entities: ['dist/**/**.entity{.ts,.js}'],
     }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      typePaths: ['./**/*.graphql'],
+      playground: true,
+    }),
     SurveyModule,
     QuestionModule,
     ChoiceModule,
     AnswerModule,
   ],
-  controllers: [ChoiceController],
 })
 export class AppModule {}

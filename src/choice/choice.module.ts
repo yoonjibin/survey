@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ChoiceService } from './choice.service';
-import { ChoiceController } from './choice.controller';
+import { ChoiceResolver } from './choice.resolver';
 
 @Module({
-  providers: [ChoiceService],
-  controllers: [ChoiceController],
+  providers: [ChoiceService, ChoiceResolver],
 })
 export class ChoiceModule {}
