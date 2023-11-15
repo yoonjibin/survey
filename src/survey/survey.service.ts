@@ -20,6 +20,7 @@ export class SurveyService {
   }
 
   async updateSurvey(id: number, title: string) {
-    return await this.surveyRepository.update({ id: id }, { title: title });
+    await this.surveyRepository.update({ id: id }, { title: title });
+    return await this.surveyRepository.findOne({ where: { id: id } });
   }
 }

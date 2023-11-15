@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { SurveyService } from './survey.service';
 import { title } from 'process';
 
@@ -17,7 +17,10 @@ export class SurveyResolver {
   }
 
   @Mutation('updateSurvey')
-  async updateSurvey(@Args('id') id: number, @Args('title') title: string) {
+  async updateSurvey(
+    @Args('id', { type: () => Int }) id: number,
+    @Args('title') title: string,
+  ) {
     return this.surveyService.updateSurvey(id, title);
   }
 }
