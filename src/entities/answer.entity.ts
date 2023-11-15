@@ -6,6 +6,8 @@ export class AnswerEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => ChoiceEntity, (ChoiceEntity) => ChoiceEntity.id)
+  @ManyToOne(() => ChoiceEntity, (ChoiceEntity) => ChoiceEntity.id, {
+    onDelete: 'CASCADE',
+  })
   choice: ChoiceEntity;
 }

@@ -12,6 +12,8 @@ export class ChoiceEntity {
   @Column()
   score: number;
 
-  @ManyToOne(() => QuestionEntity, (QuestionEntity) => QuestionEntity.id)
+  @ManyToOne(() => QuestionEntity, (QuestionEntity) => QuestionEntity.id, {
+    onDelete: 'CASCADE',
+  })
   question: QuestionEntity;
 }
