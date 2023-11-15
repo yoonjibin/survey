@@ -6,7 +6,8 @@ type Survey {
 }
 
 type Query {
-  getAllSurvey(): [Survey]
+  getAllSurvey: [Survey]
+  getById(id: ID): Survey
 }
 
 type Mutation {
