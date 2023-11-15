@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { ChoiceEntity } from './choice.entity';
 
 @Entity()
-export class submission {
+export class AnswerEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
