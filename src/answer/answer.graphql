@@ -1,13 +1,5 @@
 type Answer {
-  id: Int!
+  id: ID!
   content: String!
   answer: Answer!
-}
-
-type Query {
-
-}
-
-type Mutation {
-    
 }

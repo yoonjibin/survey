@@ -1,14 +1,6 @@
 type Choice {
-  id: Int!
+  id: ID!
   text: String!
   score: Int!
   question: Question!
-}
-
-type Query {
-
-}
-
-type Mutation {
-    
 }
