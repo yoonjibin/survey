@@ -5,6 +5,7 @@ import { SurveyModule } from './survey/survey.module';
 import { QuestionModule } from './question/question.module';
 import { ChoiceController } from './choice/choice.controller';
 import { ChoiceModule } from './choice/choice.module';
+import { AnswerModule } from './answer/answer.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ChoiceModule } from './choice/choice.module';
     SurveyModule,
     QuestionModule,
     ChoiceModule,
+    AnswerModule,
   ],
   controllers: [ChoiceController],
 })
