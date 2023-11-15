@@ -10,6 +10,10 @@ export class SurveyService {
     private surveyRepository: Repository<SurveyEntity>,
   ) {}
 
+  async getAllSurvey() {
+    return this.surveyRepository.find();
+  }
+
   async createSurvey(title: string) {
     const survey = this.surveyRepository.create({ title: title });
     return await this.surveyRepository.save(survey);

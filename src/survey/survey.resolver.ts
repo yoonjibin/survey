@@ -1,11 +1,16 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { SurveyService } from './survey.service';
 
 @Resolver()
 export class SurveyResolver {
   constructor(private surveyService: SurveyService) {}
 
-  @Mutation()
+  @Query('getAllSurvey')
+  async getAllSurvey() {
+    return this.surveyService.getAllSurvey();
+  }
+
+  @Mutation('createSurvey')
   async createSurvey(@Args('title') title: string) {
     return this.surveyService.createSurvey(title);
   }

@@ -1,5 +1,5 @@
 type Answer {
   id: ID!
   content: String!
-  answer: Answer!
+  choices: Choice!
 }
