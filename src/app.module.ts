@@ -6,6 +6,7 @@ import { QuestionModule } from './question/question.module';
 import { ChoiceController } from './choice/choice.controller';
 import { ChoiceModule } from './choice/choice.module';
 import { AnswerModule } from './answer/answer.module';
+import { GraphQLModule } from '@nestjs/graphql';
 
 @Module({
   imports: [
@@ -23,6 +24,9 @@ import { AnswerModule } from './answer/answer.module';
       synchronize: true,
       logging: true,
       entities: ['dist/**/**.entity{.ts,.js}'],
+    }),
+    GraphQLModule.forRoot({
+      typePaths: ['./**/*.graphql'],
     }),
     SurveyModule,
     QuestionModule,
