@@ -9,4 +9,9 @@ export class SurveyService {
     @InjectRepository(SurveyEntity)
     private surveyRepository: Repository<SurveyEntity>,
   ) {}
+
+  async createSurvey(title: string) {
+    const survey = this.surveyRepository.create({ title: title });
+    return await this.surveyRepository.save(survey);
+  }
 }

@@ -7,6 +7,6 @@ export class SurveyResolver {
 
   @Mutation()
   async createSurvey(@Args('title') title: string) {
-    await this.surveyService.createSurvey(title);
+    return this.surveyService.createSurvey(title);
   }
 }

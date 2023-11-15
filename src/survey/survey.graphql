@@ -1,14 +1,14 @@
 type Survey {
-  id: Int!
+  id: ID!
   title: String!
-  isCompleted: Boolean!
-  questions: [Question!]!
+  isCompleted: Boolean
+  questions: [Question]!
 }
 
 type Query {
-
+  getSurvey(id: ID!): Survey
 }
 
 type Mutation {
-    
+  createSurvey(title: String!): Survey
 }
