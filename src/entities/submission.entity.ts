@@ -6,6 +6,6 @@ export class submission {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => AnswerEntity, (AnswerEntity) => AnswerEntity.isCompleted)
+  @ManyToOne(() => AnswerEntity, (AnswerEntity) => AnswerEntity.id)
   answer: AnswerEntity;
 }
