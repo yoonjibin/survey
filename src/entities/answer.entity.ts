@@ -7,5 +7,5 @@ export class AnswerEntity {
   id: number;
 
   @ManyToOne(() => ChoiceEntity, (ChoiceEntity) => ChoiceEntity.id)
-  answer: ChoiceEntity;
+  choice: ChoiceEntity;
 }
