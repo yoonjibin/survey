@@ -5,12 +5,12 @@ import { SurveyService } from './survey.service';
 export class SurveyResolver {
   constructor(private surveyService: SurveyService) {}
 
-  @Query()
+  @Query('getAllSurvey')
   async getAllSurvey() {
     return this.surveyService.getAllSurvey();
   }
 
-  @Mutation()
+  @Mutation('createSurvey')
   async createSurvey(@Args('title') title: string) {
     return this.surveyService.createSurvey(title);
   }
