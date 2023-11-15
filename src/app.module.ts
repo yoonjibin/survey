@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { SurveyModule } from './survey/survey.module';
 import { QuestionModule } from './question/question.module';
-import { ChoiceController } from './choice/choice.controller';
 import { ChoiceModule } from './choice/choice.module';
 import { AnswerModule } from './answer/answer.module';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -27,12 +26,12 @@ import { GraphQLModule } from '@nestjs/graphql';
     }),
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
+      playground: true,
     }),
     SurveyModule,
     QuestionModule,
     ChoiceModule,
     AnswerModule,
   ],
-  controllers: [ChoiceController],
 })
 export class AppModule {}
