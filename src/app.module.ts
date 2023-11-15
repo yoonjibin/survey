@@ -6,6 +6,7 @@ import { QuestionModule } from './question/question.module';
 import { ChoiceModule } from './choice/choice.module';
 import { AnswerModule } from './answer/answer.module';
 import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { GraphQLModule } from '@nestjs/graphql';
       logging: true,
       entities: ['dist/**/**.entity{.ts,.js}'],
     }),
-    GraphQLModule.forRoot({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
       playground: true,
     }),
