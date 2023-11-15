@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { SurveyModule } from './survey/survey.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ConfigModule } from '@nestjs/config';
       logging: true,
       entities: ['dist/**/**.entity{.ts,.js}'],
     }),
+    SurveyModule,
   ],
 })
 export class AppModule {}
