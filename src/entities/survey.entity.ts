@@ -5,7 +5,7 @@ export class SurveyEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, length: 50 })
   title: string;
 
   @Column({ nullable: false })
