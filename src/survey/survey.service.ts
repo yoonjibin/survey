@@ -18,4 +18,8 @@ export class SurveyService {
     const survey = this.surveyRepository.create({ title: title });
     return await this.surveyRepository.save(survey);
   }
+
+  async updateSurvey(id: number, title: string) {
+    return await this.surveyRepository.update({ id: id }, { title: title });
+  }
 }
