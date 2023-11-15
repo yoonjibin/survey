@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { SurveyModule } from './survey/survey.module';
 import { QuestionModule } from './question/question.module';
+import { ChoiceController } from './choice/choice.controller';
+import { ChoiceModule } from './choice/choice.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { QuestionModule } from './question/question.module';
     }),
     SurveyModule,
     QuestionModule,
+    ChoiceModule,
   ],
+  controllers: [ChoiceController],
 })
 export class AppModule {}
