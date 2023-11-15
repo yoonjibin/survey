@@ -2,12 +2,12 @@ type Survey {
   id: ID!
   title: String!
   isCompleted: Boolean
-  questions: [Question]!
+  questions: [Question]
 }
 
 type Query {
-  getAllSurvey(): [Survey]
-  getSurvey(id: ID!): Survey
+  getAllSurvey(): Survey
+  getSurvey(id: ID!): Survey  
 }
 
 type Mutation {
