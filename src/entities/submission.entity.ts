@@ -1,11 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { AnswerEntity } from './answer.entity';
+import { ChoiceEntity } from './choice.entity';
 
 @Entity()
 export class submission {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => AnswerEntity, (AnswerEntity) => AnswerEntity.id)
-  answer: AnswerEntity;
+  @ManyToOne(() => ChoiceEntity, (ChoiceEntity) => ChoiceEntity.id)
+  answer: ChoiceEntity;
 }

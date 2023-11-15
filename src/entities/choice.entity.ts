@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { QuestionEntity } from './question.entity';
 
-@Entity('answer')
-export class AnswerEntity {
+@Entity('choice')
+export class ChoiceEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
