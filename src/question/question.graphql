@@ -1,0 +1,14 @@
+type Question {
+  id: Int!
+  content: String!
+  survey: Survey!
+  choices: [Choice!]!
+}
+
+type Query {
+
+}
+
+type Mutation {
+    
+}
