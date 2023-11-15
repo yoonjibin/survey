@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { SurveyService } from './survey.service';
+import { title } from 'process';
 
 @Resolver()
 export class SurveyResolver {
@@ -13,5 +14,10 @@ export class SurveyResolver {
   @Mutation('createSurvey')
   async createSurvey(@Args('title') title: string) {
     return this.surveyService.createSurvey(title);
+  }
+
+  @Mutation('updateSurvey')
+  async updateSurvey(@Args('id') id: number, @Args('title') title: string) {
+    return this.surveyService.updateSurvey(id, title);
   }
 }
