@@ -16,6 +16,11 @@ export class SurveyService {
     return this.surveyRepository.find();
   }
 
+  async getSurveyById(id: number) {
+    await this.checkSurveyExist(id);
+    return await this.surveyRepository.findOne({ where: { id: id } });
+  }
+
   async createSurvey(title: string) {
     const survey = this.surveyRepository.create({ title: title });
     return await this.surveyRepository.save(survey);
@@ -36,7 +41,7 @@ export class SurveyService {
       where: { id: id },
     });
     if (!existingSurvey) {
-      this.logger.error(`Survey with ID ${id} not found`, id);
+      this.logger.error(`Survey with ID ${id} not found`);
       throw new ApolloError('존재하지 않는 설문지입니다.', 'SURVEY_NOT_FOUND', {
         customErrorCode: 404,
         parameter: 'id',
