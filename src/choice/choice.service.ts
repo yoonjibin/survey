@@ -3,11 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ChoiceEntity } from 'src/entities/choice.entity';
 import { QuestionUtil } from 'src/question/utils/question.util';
 import { Repository } from 'typeorm';
+import { ChoiceUtil } from './utils/choice.util';
 
 @Injectable()
 export class ChoiceService {
   constructor(
     private readonly questionUtil: QuestionUtil,
+    private readonly choiceUtil: ChoiceUtil,
     @InjectRepository(ChoiceEntity)
     private readonly choiceRepository: Repository<ChoiceEntity>,
   ) {}
@@ -30,5 +32,14 @@ export class ChoiceService {
       question: question,
     });
     return await this.choiceRepository.save(createdChoice);
+  }
+
+  async updateChoice(text: string, score: number, choiceId: number) {
+    await this.choiceUtil.checkChoiceExist(choiceId);
+    await this.choiceRepository.update(
+      { id: choiceId },
+      { text: text, score: score },
+    );
+    return await this.choiceRepository.findOne({ where: { id: choiceId } });
   }
 }
