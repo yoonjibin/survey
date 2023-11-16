@@ -11,6 +11,9 @@ export class QuestionService {
     @InjectRepository(QuestionEntity)
     private readonly questionRepository: Repository<QuestionEntity>,
   ) {}
+  async getAllQuestion() {
+    return await this.questionRepository.find();
+  }
 
   async getAllQuestionBySurveyId(surveyId: number) {
     const survey = await this.surveyUtil.getSurveyById(surveyId);
