@@ -32,4 +32,11 @@ export class QuestionResolver {
   ) {
     return this.questionService.updateQuestion(question, questionId);
   }
+
+  @Mutation('deleteQuestion')
+  async deleteQuestion(
+    @Args('questionId', { type: () => Int }) questionId: number,
+  ) {
+    return this.questionService.deleteQuestion(questionId);
+  }
 }

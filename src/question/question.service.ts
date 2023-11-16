@@ -38,4 +38,8 @@ export class QuestionService {
     );
     return await this.questionRepository.findOne({ where: { id: questionId } });
   }
+
+  async deleteQuestion(questionId: number) {
+    await this.questionRepository.delete({ id: questionId });
+  }
 }
