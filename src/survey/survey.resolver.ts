@@ -11,6 +11,11 @@ export class SurveyResolver {
     return this.surveyService.getAllSurvey();
   }
 
+  @Query('getSurveyById')
+  async getSurveyById(@Args('id', { type: () => Int }) id: number) {
+    return this.surveyService.getSurveyById(id);
+  }
+
   @Mutation('createSurvey')
   async createSurvey(@Args('title') title: string) {
     return this.surveyService.createSurvey(title);
