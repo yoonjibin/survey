@@ -30,4 +30,12 @@ export class QuestionService {
     });
     return await this.questionRepository.save(createdQuestion);
   }
+
+  async updateQuestion(question: string, questionId: number) {
+    await this.questionRepository.update(
+      { id: questionId },
+      { question: question },
+    );
+    return await this.questionRepository.findOne({ where: { id: questionId } });
+  }
 }

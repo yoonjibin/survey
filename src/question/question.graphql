@@ -11,4 +11,5 @@ type Query {
 
 type Mutation {
   createQuestion(question: String!, surveyId: ID!): Question
+  updateQuestion(question: String!, questionId: ID!): Question
 }
