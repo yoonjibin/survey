@@ -11,6 +11,9 @@ export class ChoiceService {
     @InjectRepository(ChoiceEntity)
     private readonly choiceRepository: Repository<ChoiceEntity>,
   ) {}
+  async getAllChoice() {
+    return await this.choiceRepository.find();
+  }
 
   async getAllChoiceByQuestionId(questionId: number) {
     const question = await this.questionUtil.getQuestionById(questionId);
