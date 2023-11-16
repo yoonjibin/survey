@@ -42,4 +42,9 @@ export class ChoiceService {
     );
     return await this.choiceRepository.findOne({ where: { id: choiceId } });
   }
+
+  async deleteChoice(choiceId: number) {
+    await this.choiceUtil.checkChoiceExist(choiceId);
+    await this.choiceRepository.delete({ id: choiceId });
+  }
 }
