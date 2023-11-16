@@ -5,6 +5,11 @@ type Choice {
   question: Question!
 }
 
+type Query {
+  getAllChoice: [Question]
+  getAllChoiceByQuestionId(questionId: ID): [Question]
+}
+
 type Mutation {
   createChoice(text: String!, score: Int!, questionId: ID!): Choice
 }
