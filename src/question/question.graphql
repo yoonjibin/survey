@@ -4,3 +4,7 @@ type Question {
   survey: Survey!
   choices: [Choice]
 }
+
+Mutation {
+  createQuestion(content: string, surveyId: number): Question
+}
