@@ -5,6 +5,6 @@ type Question {
   choices: [Choice]
 }
 
-Mutation {
-  createQuestion(content: string, surveyId: number): Question
+type Mutation {
+  createQuestion(content: String, surveyId: ID): Question
 }
