@@ -20,7 +20,10 @@ export class SurveyService {
   }
 
   async updateSurvey(id: number, title: string) {
-    if (!this.surveyRepository.exist({ where: { id: id } })) {
+    const existingSurvey = await this.surveyRepository.exist({
+      where: { id: id },
+    });
+    if (!existingSurvey) {
       throw new HttpException(
         '존재하지 않는 설문지입니다.',
         HttpStatus.NOT_FOUND,
