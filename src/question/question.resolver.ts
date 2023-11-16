@@ -1,9 +1,21 @@
-import { Args, Int, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { QuestionService } from './question.service';
 
 @Resolver()
 export class QuestionResolver {
   constructor(private questionService: QuestionService) {}
+
+  @Query('getAllQuestion')
+  async getAllQuestion() {
+    return await this.questionService.getAllQuestion();
+  }
+
+  @Query('getAllQuestionBySurveyId')
+  async getAllQuestionBySurveyId(
+    @Args('surveyId', { type: () => Int }) surveyId: number,
+  ) {
+    return await this.questionService.getAllQuestionBySurveyId(surveyId);
+  }
 
   @Mutation('createQuestion')
   async createQuestion(

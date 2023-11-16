@@ -4,6 +4,11 @@ type Question {
   choices: [Choice]
 }
 
+type Query {
+  getAllQuestion: [Question]
+  getAllQuestionBySurveyId(surveyId: ID): [Question]
+}
+
 type Mutation {
-  createQuestion(question: String, surveyId: ID): Question
+  createQuestion(question: String!, surveyId: ID!): Question
 }
