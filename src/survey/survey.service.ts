@@ -32,4 +32,8 @@ export class SurveyService {
     await this.surveyRepository.update({ id: id }, { title: title });
     return await this.surveyRepository.findOne({ where: { id: id } });
   }
+
+  async deleteSurvey(id: number) {
+    await this.surveyRepository.delete({ id: id });
+  }
 }
