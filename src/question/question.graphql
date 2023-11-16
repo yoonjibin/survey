@@ -5,6 +5,7 @@ type Question {
 }
 
 type Query {
+  getAllQuestion: [Question]
   getAllQuestionBySurveyId(surveyId: ID): [Question]
 }
 
