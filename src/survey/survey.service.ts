@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SurveyEntity } from 'src/entities/survey.entity';
 import { Repository } from 'typeorm';
@@ -17,5 +17,19 @@ export class SurveyService {
   async createSurvey(title: string) {
     const survey = this.surveyRepository.create({ title: title });
     return await this.surveyRepository.save(survey);
+  }
+
+  async updateSurvey(id: number, title: string) {
+    const existingSurvey = await this.surveyRepository.exist({
+      where: { id: id },
+    });
+    if (!existingSurvey) {
+      throw new HttpException(
+        '존재하지 않는 설문지입니다.',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    await this.surveyRepository.update({ id: id }, { title: title });
+    return await this.surveyRepository.findOne({ where: { id: id } });
   }
 }
