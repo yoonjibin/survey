@@ -34,4 +34,9 @@ export class ChoiceResolver {
   ) {
     return await this.choiceService.updateChoice(text, score, choiceId);
   }
+
+  @Mutation('deleteChoice')
+  async deleteChoice(@Args('choiceId', { type: () => Int }) choiceId: number) {
+    return await this.choiceService.deleteChoice(choiceId);
+  }
 }
