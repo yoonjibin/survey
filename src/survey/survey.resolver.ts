@@ -23,4 +23,9 @@ export class SurveyResolver {
   ) {
     return this.surveyService.updateSurvey(id, title);
   }
+
+  @Mutation('deleteSurvey')
+  async deleteSurvey(@Args('id', { type: () => Int }) id: number) {
+    this.surveyService.deleteSurvey(id);
+  }
 }
