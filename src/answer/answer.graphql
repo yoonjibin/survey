@@ -1,5 +1,8 @@
 type Answer {
   id: ID!
-  content: String!
   choices: Choice!
+}
+
+type Mutation {
+  createAnswer(choiceId: ID): Answer
 }
