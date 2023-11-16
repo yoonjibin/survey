@@ -3,11 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { QuestionEntity } from 'src/entities/question.entity';
 import { SurveyUtil } from 'src/survey/utils/survey.util';
 import { Repository } from 'typeorm';
+import { QuestionUtil } from './utils/question.util';
 
 @Injectable()
 export class QuestionService {
   constructor(
     private readonly surveyUtil: SurveyUtil,
+    private readonly questionUtil: QuestionUtil,
     @InjectRepository(QuestionEntity)
     private readonly questionRepository: Repository<QuestionEntity>,
   ) {}
@@ -32,6 +34,7 @@ export class QuestionService {
   }
 
   async updateQuestion(question: string, questionId: number) {
+    await this.questionUtil.checkQuestionExist(questionId);
     await this.questionRepository.update(
       { id: questionId },
       { question: question },
@@ -40,6 +43,7 @@ export class QuestionService {
   }
 
   async deleteQuestion(questionId: number) {
+    await this.questionUtil.checkQuestionExist(questionId);
     await this.questionRepository.delete({ id: questionId });
   }
 }
