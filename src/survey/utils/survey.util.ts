@@ -24,4 +24,9 @@ export class SurveyUtil {
       });
     }
   }
+
+  async getSurveyById(id: number) {
+    await this.checkSurveyExist(id);
+    return this.surveyRepository.findOne({ where: { id: id } });
+  }
 }

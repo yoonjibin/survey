@@ -1,10 +1,10 @@
 type Question {
   id: ID!
-  content: String!
+  question: String!
   survey: Survey!
   choices: [Choice]
 }
 
 type Mutation {
-  createQuestion(content: String, surveyId: ID): Question
+  createQuestion(question: String, surveyId: ID): Question
 }
