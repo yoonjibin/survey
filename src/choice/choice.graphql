@@ -12,4 +12,5 @@ type Query {
 type Mutation {
   createChoice(text: String!, score: Int!, questionId: ID!): Choice
   updateChoice(text: String!, score: Int!, choiceId: ID!): Choice
+  deleteChoice(choiceId: ID!): Choice
 }
