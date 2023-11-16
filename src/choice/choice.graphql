@@ -1,0 +1,10 @@
+type Choice {
+  id: ID!
+  text: String!
+  score: Int!
+  question: Question!
+}
+
+type Mutation {
+  createChoice(text: String!, score: Int!, questionId: ID!): Choice
+}
