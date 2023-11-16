@@ -1,7 +1,6 @@
 type Question {
   id: ID!
   question: String!
-  survey: Survey!
   choices: [Choice]
 }
 
