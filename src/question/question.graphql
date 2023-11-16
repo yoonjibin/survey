@@ -10,6 +10,6 @@ type Query {
 }
 
 type Mutation {
-  createQuestion(question: String!, questionId: ID!): Question
-  updateQuestion(question: String!, surveyId: ID!): Question
+  createQuestion(question: String!, surveyId: ID!): Question
+  updateQuestion(question: String!, questionId: ID!): Question
 }

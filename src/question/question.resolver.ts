@@ -24,4 +24,12 @@ export class QuestionResolver {
   ) {
     return this.questionService.createQuestion(question, surveyId);
   }
+
+  @Mutation('updateQuestion')
+  async updateQuestion(
+    @Args('question') question: string,
+    @Args('questionId', { type: () => Int }) questionId: number,
+  ) {
+    return this.questionService.updateQuestion(question, questionId);
+  }
 }

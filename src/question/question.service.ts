@@ -32,9 +32,10 @@ export class QuestionService {
   }
 
   async updateQuestion(question: string, questionId: number) {
-    return await this.questionRepository.update(
+    await this.questionRepository.update(
       { id: questionId },
       { question: question },
     );
+    return await this.questionRepository.findOne({ where: { id: questionId } });
   }
 }
