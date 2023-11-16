@@ -5,8 +5,8 @@ import { ApolloError } from 'apollo-server-express';
 import { ChoiceEntity } from 'src/entities/choice.entity';
 
 @Injectable()
-export class ChoiceionUtil {
-  private readonly logger = new Logger(ChoiceionUtil.name);
+export class ChoiceUtil {
+  private readonly logger = new Logger(ChoiceUtil.name);
   constructor(
     @InjectRepository(ChoiceEntity)
     private readonly choiceRepository: Repository<ChoiceEntity>,
