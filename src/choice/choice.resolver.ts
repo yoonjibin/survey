@@ -25,4 +25,13 @@ export class ChoiceResolver {
   ) {
     return await this.choiceService.createChoice(text, score, questionId);
   }
+
+  @Mutation('updateChoice')
+  async updateChoice(
+    @Args('text') text: string,
+    @Args('score') score: number,
+    @Args('choiceId', { type: () => Int }) choiceId: number,
+  ) {
+    return await this.choiceService.updateChoice(text, score, choiceId);
+  }
 }
