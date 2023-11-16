@@ -5,6 +5,11 @@ import { ChoiceService } from './choice.service';
 export class ChoiceResolver {
   constructor(private choiceService: ChoiceService) {}
 
+  @Query('getAllChoice')
+  async getAllChoice() {
+    return await this.choiceService.getAllChoice();
+  }
+
   @Query('getAllChoiceByQuestionId')
   async getAllChoiceByQuestionId(
     @Args('questionId', { type: () => Int }) questionId: number,
