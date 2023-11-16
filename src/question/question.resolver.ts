@@ -5,6 +5,11 @@ import { QuestionService } from './question.service';
 export class QuestionResolver {
   constructor(private questionService: QuestionService) {}
 
+  @Query('getAllQuestion')
+  async getAllQuestion() {
+    return await this.questionService.getAllQuestion();
+  }
+
   @Query('getAllQuestionBySurveyId')
   async getAllQuestionBySurveyId(
     @Args('surveyId', { type: () => Int }) surveyId: number,
