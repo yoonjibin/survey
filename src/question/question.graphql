@@ -5,7 +5,7 @@ type Question {
 }
 
 type Query {
-  findAllBySurveyId(surveyId: ID!): Question
+  findAllQuestionBySurveyId(surveyId: ID!): Question
 }
 
 type Mutation {

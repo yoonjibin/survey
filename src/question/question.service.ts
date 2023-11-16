@@ -12,8 +12,15 @@ export class QuestionService {
     private readonly questionRepository: Repository<QuestionEntity>,
   ) {}
 
-  async createQuestion(question: string, survey_id: number) {
-    const survey = await this.surveyUtil.getSurveyById(survey_id);
+  async getAllQuestionBySurveyId(surveyId: number) {
+    const survey = await this.surveyUtil.getSurveyById(surveyId);
+    return await this.questionRepository.find({
+      where: { survey: { id: survey.id } },
+    });
+  }
+
+  async createQuestion(question: string, surveyId: number) {
+    const survey = await this.surveyUtil.getSurveyById(surveyId);
     const createdQuestion = await this.questionRepository.create({
       question: question,
       survey: survey,
