@@ -2,12 +2,11 @@ type Choice {
   id: ID!
   text: String!
   score: Int!
-  question: Question!
 }
 
 type Query {
-  getAllChoice: [Question]
-  getAllChoiceByQuestionId(questionId: ID): [Question]
+  getAllChoice: [Choice]
+  getAllChoiceByQuestionId(questionId: ID): [Choice]
 }
 
 type Mutation {
