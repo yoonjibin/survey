@@ -3,11 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ApolloError } from 'apollo-server-express';
 import { SurveyEntity } from 'src/entities/survey.entity';
 import { Repository } from 'typeorm';
+import { SurveyUtil } from './utils/survey.util';
 
 @Injectable()
 export class SurveyService {
-  private readonly logger = new Logger(SurveyService.name);
   constructor(
+    private readonly surveyUtil: SurveyUtil,
     @InjectRepository(SurveyEntity)
     private surveyRepository: Repository<SurveyEntity>,
   ) {}
@@ -17,7 +18,7 @@ export class SurveyService {
   }
 
   async getSurveyById(id: number) {
-    await this.checkSurveyExist(id);
+    await this.surveyUtil.checkSurveyExist(id);
     return await this.surveyRepository.findOne({ where: { id: id } });
   }
 
@@ -27,25 +28,12 @@ export class SurveyService {
   }
 
   async updateSurvey(id: number, title: string) {
-    await this.checkSurveyExist(id);
+    await this.surveyUtil.checkSurveyExist(id);
     return await this.surveyRepository.update({ id: id }, { title: title });
   }
 
   async deleteSurvey(id: number) {
-    await this.checkSurveyExist(id);
+    await this.surveyUtil.checkSurveyExist(id);
     await this.surveyRepository.delete({ id: id });
-  }
-
-  private async checkSurveyExist(id: number) {
-    const existingSurvey = await this.surveyRepository.exist({
-      where: { id: id },
-    });
-    if (!existingSurvey) {
-      this.logger.error(`Survey with ID ${id} not found`);
-      throw new ApolloError('존재하지 않는 설문지입니다.', 'SURVEY_NOT_FOUND', {
-        customErrorCode: 404,
-        parameter: 'id',
-      });
-    }
   }
 }
