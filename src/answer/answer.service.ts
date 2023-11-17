@@ -14,6 +14,15 @@ export class AnswerService {
     private readonly answerRepository: Repository<AnswerEntity>,
   ) {}
 
+  async findAllAnswerByQuestionId(questionId: number) {
+    return this.answerRepository
+      .createQueryBuilder('answer')
+      .leftJoinAndSelect('answer.choice', 'choice')
+      .leftJoinAndSelect('choice.question', 'question')
+      .where('question.id = :questionId', { questionId })
+      .getOne();
+  }
+
   async createAnswer(choiceId: number) {
     const choice = await this.choiceUtil.getChoiceById(choiceId);
     const existingAnswer = await this.answerRepository.exist({
