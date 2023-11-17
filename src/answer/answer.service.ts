@@ -14,7 +14,7 @@ export class AnswerService {
     private readonly answerRepository: Repository<AnswerEntity>,
   ) {}
 
-  async findAllAnswerByQuestionId(questionId: number) {
+  async getAllAnswerByQuestionId(questionId: number) {
     return this.answerRepository
       .createQueryBuilder('answer')
       .leftJoinAndSelect('answer.choice', 'choice')
