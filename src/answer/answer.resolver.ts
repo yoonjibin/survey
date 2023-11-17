@@ -4,6 +4,10 @@ import { AnswerService } from './answer.service';
 @Resolver()
 export class AnswerResolver {
   constructor(private answerService: AnswerService) {}
+  @Query('getAllAnswer')
+  async getAllAnswer() {
+    return await this.answerService.getAllAnswer();
+  }
 
   @Query('getAnswerByQuestionId')
   async getAnswerByQuestionId(

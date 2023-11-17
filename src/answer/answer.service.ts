@@ -17,7 +17,8 @@ export class AnswerService {
   ) {}
 
   async getAllAnswer() {
-    return await this.answerRepository.find();
+    const answers = await this.answerRepository.find({ relations: ['choice'] });
+    return answers;
   }
 
   async getAnswerByQuestionId(questionId: number) {
