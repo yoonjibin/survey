@@ -5,11 +5,11 @@ import { AnswerService } from './answer.service';
 export class AnswerResolver {
   constructor(private answerService: AnswerService) {}
 
-  @Query('getAllAnswerByQuestionId')
-  async getAllAnswerByQuestionId(
+  @Query('getAnswerByQuestionId')
+  async getAnswerByQuestionId(
     @Args('questionId', { type: () => Int }) questionId: number,
   ) {
-    return await this.answerService.getAllAnswerByQuestionId(questionId);
+    return await this.answerService.getAnswerByQuestionId(questionId);
   }
 
   @Mutation('createAnswer')

@@ -16,7 +16,7 @@ export class AnswerService {
     private readonly answerRepository: Repository<AnswerEntity>,
   ) {}
 
-  async getAllAnswerByQuestionId(questionId: number) {
+  async getAnswerByQuestionId(questionId: number) {
     await this.questionUtil.checkQuestionExist(questionId);
     const answer = await this.answerRepository
       .createQueryBuilder('answer')
