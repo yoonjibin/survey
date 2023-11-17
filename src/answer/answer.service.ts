@@ -16,6 +16,10 @@ export class AnswerService {
     private readonly answerRepository: Repository<AnswerEntity>,
   ) {}
 
+  async getAllAnswer() {
+    return await this.answerRepository.find();
+  }
+
   async getAnswerByQuestionId(questionId: number) {
     await this.questionUtil.checkQuestionExist(questionId);
     const answer = await this.answerRepository
