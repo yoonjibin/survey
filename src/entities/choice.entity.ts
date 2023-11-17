@@ -1,5 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { QuestionEntity } from './question.entity';
+import { AnswerEntity } from './answer.entity';
 
 @Entity('choice')
 export class ChoiceEntity {
@@ -16,4 +23,7 @@ export class ChoiceEntity {
     onDelete: 'CASCADE',
   })
   question: QuestionEntity;
+
+  @OneToMany(() => AnswerEntity, (answer) => answer.choice)
+  answers: AnswerEntity;
 }
