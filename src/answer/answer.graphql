@@ -5,6 +5,7 @@ type Answer {
 
 type Query {
   getAnswerByQuestionId(questionId: ID!): Answer
+  getAllAnswer(): [Answer]
 }
 
 type Mutation {
