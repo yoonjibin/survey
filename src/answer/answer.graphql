@@ -3,6 +3,11 @@ type Answer {
   choice: Choice
 }
 
+type Query {
+  getAnswerByQuestionId(questionId: ID!): Answer
+  getAllAnswer: [Answer]
+}
+
 type Mutation {
-  createAnswer(choiceId: ID): Answer
+  createAnswer(choiceId: ID!): Answer
 }
