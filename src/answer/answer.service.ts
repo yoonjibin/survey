@@ -63,7 +63,7 @@ export class AnswerService {
       where: { id: answerId },
     });
     if (!existingAnswer) {
-      this.logger.error(`Answer with ID ${choiceId} not found`);
+      this.logger.error(`Answer with ID ${answerId} not found`);
       throw new ApolloError('존재하지 않는 답변.', 'NOTFOUND', {
         customErrorCode: 404,
         parameter: 'id',
@@ -74,5 +74,19 @@ export class AnswerService {
       where: { id: answerId },
       relations: ['choice'],
     });
+  }
+
+  async deleteAnswer(answerId: number) {
+    const existingAnswer = await this.answerRepository.exist({
+      where: { id: answerId },
+    });
+    if (!existingAnswer) {
+      this.logger.error(`Answer with ID ${answerId} not found`);
+      throw new ApolloError('존재하지 않는 답변.', 'NOTFOUND', {
+        customErrorCode: 404,
+        parameter: 'id',
+      });
+    }
+    await this.answerRepository.delete({ id: answerId });
   }
 }

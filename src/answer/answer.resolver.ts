@@ -28,4 +28,9 @@ export class AnswerResolver {
   ) {
     return await this.answerService.updateAnswer(answerId, choiceId);
   }
+
+  @Mutation('deleteAnswer')
+  async deleteAnswer(@Args('answerId', { type: () => Int }) answerId: number) {
+    return await this.answerService.deleteAnswer(answerId);
+  }
 }
