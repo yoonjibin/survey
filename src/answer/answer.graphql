@@ -1,6 +1,6 @@
 type Answer {
   id: ID!
-  choices: Choice!
+  choice: Choice
 }
 
 type Mutation {
