@@ -60,7 +60,7 @@ export class AnswerService {
   async updateAnswer(answerId: number, choiceId: number) {
     const choice = await this.choiceUtil.getChoiceById(choiceId);
     const existingAnswer = await this.answerRepository.exist({
-      where: { choice: { id: choiceId } },
+      where: { id: answerId },
     });
     if (!existingAnswer) {
       this.logger.error(`Answer with ID ${choiceId} not found`);
@@ -70,6 +70,9 @@ export class AnswerService {
       });
     }
     await this.answerRepository.update({ id: answerId }, { choice: choice });
-    return this.answerRepository.findOne({ where: { id: answerId } });
+    return this.answerRepository.findOne({
+      where: { id: answerId },
+      relations: ['choice'],
+    });
   }
 }

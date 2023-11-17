@@ -20,4 +20,12 @@ export class AnswerResolver {
   async createAnswer(@Args('choiceId', { type: () => Int }) choiceId: number) {
     return await this.answerService.createAnswer(choiceId);
   }
+
+  @Mutation('updateAnswer')
+  async updateAnswer(
+    @Args('answerId', { type: () => Int }) answerId: number,
+    @Args('choiceId', { type: () => Int }) choiceId: number,
+  ) {
+    return await this.answerService.updateAnswer(answerId, choiceId);
+  }
 }
