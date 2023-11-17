@@ -56,4 +56,23 @@ export class AnswerService {
 
     return await this.answerRepository.save(answer);
   }
+
+  async updateAnswer(answerId: number, choiceId: number) {
+    const choice = await this.choiceUtil.getChoiceById(choiceId);
+    const existingAnswer = await this.answerRepository.exist({
+      where: { id: answerId },
+    });
+    if (!existingAnswer) {
+      this.logger.error(`Answer with ID ${choiceId} not found`);
+      throw new ApolloError('존재하지 않는 답변.', 'NOTFOUND', {
+        customErrorCode: 404,
+        parameter: 'id',
+      });
+    }
+    await this.answerRepository.update({ id: answerId }, { choice: choice });
+    return this.answerRepository.findOne({
+      where: { id: answerId },
+      relations: ['choice'],
+    });
+  }
 }
