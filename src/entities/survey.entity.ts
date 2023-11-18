@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { QuestionEntity } from './question.entity';
 
 @Entity('survey')
 export class SurveyEntity {
@@ -9,5 +10,8 @@ export class SurveyEntity {
   title: string;
 
   @Column({ nullable: false })
-  isCompleted: Boolean = false;
+  isCompleted: boolean = false;
+
+  @OneToMany(() => QuestionEntity, (question) => question.survey)
+  question: QuestionEntity[];
 }

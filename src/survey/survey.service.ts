@@ -1,10 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ApolloError } from 'apollo-server-express';
 import { SurveyEntity } from 'src/entities/survey.entity';
 import { Repository } from 'typeorm';
 import { SurveyUtil } from './utils/survey.util';
-import { AnswerEntity } from 'src/entities/answer.entity';
+import { QuestionEntity } from 'src/entities/question.entity';
 
 @Injectable()
 export class SurveyService {
@@ -35,14 +34,10 @@ export class SurveyService {
   }
   async updateSurveyCompleted(surveyId: number) {
     await this.surveyUtil.checkSurveyExist(surveyId);
-    const questionsWithoutAnswer = await this.surveyRepository
-      .createQueryBuilder('question')
-      .leftJoin(AnswerEntity, 'answer', 'answer.questionId = question.id')
-      .where('question.surveyId = :surveyId', { surveyId })
-      .andWhere('answer.id IS NULL')
-      .getMany();
-    if (questionsWithoutAnswer.length > 0) {
-      console.log(questionsWithoutAnswer[0].id);
+
+    const unansweredQuestions = await this.checkUnansweredQuestions(surveyId);
+    if (unansweredQuestions.length > 0) {
+      throw new Error('설문 중 답변하지 않은 질문이 있습니다.');
     }
     await this.surveyRepository.update({ id: surveyId }, { isCompleted: true });
     return await this.surveyRepository.findOne({ where: { id: surveyId } });
@@ -51,5 +46,18 @@ export class SurveyService {
   async deleteSurvey(id: number) {
     await this.surveyUtil.checkSurveyExist(id);
     await this.surveyRepository.delete({ id: id });
+  }
+
+  async checkUnansweredQuestions(surveyId: number): Promise<QuestionEntity[]> {
+    const unansweredQuestions = await this.surveyRepository
+      .createQueryBuilder('survey')
+      .leftJoinAndSelect('survey.question', 'question')
+      .leftJoin('question.choice', 'choice')
+      .leftJoin('choice.answer', 'answer')
+      .where('survey.id = :surveyId', { surveyId })
+      .andWhere('answer.id IS NULL')
+      .getMany();
+
+    return unansweredQuestions.map((survey) => survey.question).flat();
   }
 }

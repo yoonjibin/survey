@@ -1,5 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { SurveyEntity } from './survey.entity';
+import { ChoiceEntity } from './choice.entity';
 
 @Entity('question')
 export class QuestionEntity {
@@ -9,7 +16,10 @@ export class QuestionEntity {
   @Column({ nullable: false, length: 100 })
   question: string;
 
-  @ManyToOne(() => SurveyEntity, (SurveyEntity) => SurveyEntity.id, {
+  @OneToMany(() => ChoiceEntity, (choice) => choice.question)
+  choice: ChoiceEntity[]; // 여기 수정
+
+  @ManyToOne(() => SurveyEntity, (survey) => survey.question, {
     onDelete: 'CASCADE',
   })
   survey: SurveyEntity;
