@@ -13,5 +13,6 @@ type Query {
 type Mutation {
   createSurvey(title: String!): Survey
   updateSurvey(id: ID!, title: String!): Survey
+  updateSurveyCompleted(surveyId: ID!): Survey
   deleteSurvey(id: ID!): Survey
 }
