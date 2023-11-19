@@ -19,11 +19,11 @@ export class ChoiceEntity {
   @Column({ nullable: false })
   score: number;
 
-  @ManyToOne(() => QuestionEntity, (QuestionEntity) => QuestionEntity.id, {
+  @ManyToOne(() => QuestionEntity, (question) => question.choice, {
     onDelete: 'CASCADE',
   })
   question: QuestionEntity;
 
   @OneToMany(() => AnswerEntity, (answer) => answer.choice)
-  answers: AnswerEntity;
+  answer: AnswerEntity;
 }
