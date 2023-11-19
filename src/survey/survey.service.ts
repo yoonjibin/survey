@@ -24,6 +24,25 @@ export class SurveyService {
     return await this.surveyRepository.findOne({ where: { id: id } });
   }
 
+  async getTotalScoreBySurveyId(surveyId: number) {
+    await this.surveyUtil.checkSurveyExist(surveyId);
+
+    const totalScoreQuery = await this.surveyRepository
+      .createQueryBuilder('survey')
+      .leftJoinAndSelect('survey.questions', 'question')
+      .leftJoinAndSelect('question.choices', 'choice')
+      .leftJoinAndSelect('choice.answers', 'answer')
+      .where('survey.id = :surveyId', { surveyId })
+      .getOne();
+
+    const totalScore = totalScoreQuery.question
+      .flatMap((question) => question.choice)
+      .flatMap((choice) => choice.answer)
+      .reduce((acc, answer) => acc + answer.choice.score, 0);
+
+    return totalScore;
+  }
+
   async createSurvey(title: string) {
     const survey = this.surveyRepository.create({ title: title });
     return await this.surveyRepository.save(survey);

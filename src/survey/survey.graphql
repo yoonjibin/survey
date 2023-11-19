@@ -3,6 +3,10 @@ type Survey {
   title: String!
   isCompleted: Boolean
   questions: [Question]
+}
+
+type SurveyWithTotalScore {
+  survey: Survey
   totalScore: Int
 }
 
