@@ -3,11 +3,13 @@ type Survey {
   title: String!
   isCompleted: Boolean
   questions: [Question]
+  totalScore: Int
 }
 
 type Query {
   getAllSurvey: [Survey]
-  getSurveyById(id: ID): Survey
+  getSurveyById(id: ID!): Survey
+  getTotalScoreBySurveyId(id: ID!): Survey
 }
 
 type Mutation {
