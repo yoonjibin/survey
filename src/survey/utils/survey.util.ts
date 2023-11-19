@@ -57,4 +57,19 @@ export class SurveyUtil {
       );
     }
   }
+
+  async checkSurveyCompletion(surveyId: number) {
+    const survey = await this.getSurveyById(surveyId);
+
+    if (survey.isCompleted) {
+      throw new ApolloError(
+        '이미 완료된 설문지입니다.',
+        'SURVEY_ALREADY_COMPLETED',
+        {
+          customErrorCode: 400,
+          parameter: 'id',
+        },
+      );
+    }
+  }
 }

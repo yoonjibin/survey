@@ -37,6 +37,7 @@ export class SurveyService {
   async updateSurveyCompleted(surveyId: number) {
     await this.surveyUtil.checkSurveyExist(surveyId);
     await this.surveyUtil.checkUnansweredQuestions(surveyId);
+    await this.surveyUtil.checkSurveyCompletion(surveyId);
 
     await this.surveyRepository.update({ id: surveyId }, { isCompleted: true });
     return await this.surveyRepository.findOne({ where: { id: surveyId } });
