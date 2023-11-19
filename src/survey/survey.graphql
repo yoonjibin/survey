@@ -5,9 +5,15 @@ type Survey {
   questions: [Question]
 }
 
+type SurveyWithTotalScore {
+  survey: Survey
+  totalScore: Int
+}
+
 type Query {
   getAllSurvey: [Survey]
-  getSurveyById(id: ID): Survey
+  getSurveyById(id: ID!): Survey
+  getTotalScoreBySurveyId(surveyId: ID!): SurveyWithTotalScore
 }
 
 type Mutation {
