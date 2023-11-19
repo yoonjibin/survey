@@ -29,9 +29,9 @@ export class SurveyService {
 
     const totalScoreQuery = await this.surveyRepository
       .createQueryBuilder('survey')
-      .leftJoinAndSelect('survey.questions', 'question')
-      .leftJoinAndSelect('question.choices', 'choice')
-      .leftJoinAndSelect('choice.answers', 'answer')
+      .leftJoinAndSelect('survey.question', 'question')
+      .leftJoinAndSelect('question.choice', 'choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
       .where('survey.id = :surveyId', { surveyId })
       .getOne();
 
