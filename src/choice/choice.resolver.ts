@@ -17,6 +17,13 @@ export class ChoiceResolver {
     return await this.choiceService.getAllChoiceByQuestionId(questionId);
   }
 
+  @Query('getChoiceByChoiceId')
+  async getChoiceByChoiceId(
+    @Args('choiceId', { type: () => Int }) choiceId: number,
+  ) {
+    return await this.choiceService.getChoiceByChoiceId(choiceId);
+  }
+
   @Mutation('createChoice')
   async createChoice(
     @Args('text') text: string,
