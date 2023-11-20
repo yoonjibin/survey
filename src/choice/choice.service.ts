@@ -31,6 +31,17 @@ export class ChoiceService {
       .getMany();
   }
 
+  async getChoiceByChoiceId(choiceId: number) {
+    await this.choiceUtil.checkChoiceExist(choiceId);
+
+    return await this.choiceRepository
+      .createQueryBuilder('choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .where('choice.id = :choiceId', { choiceId: choiceId })
+      .orderBy('choice.id', 'ASC')
+      .getOne();
+  }
+
   async createChoice(text: string, score: number, questionId: number) {
     const question = await this.questionUtil.getQuestionById(questionId);
     const createdChoice = this.choiceRepository.create({
