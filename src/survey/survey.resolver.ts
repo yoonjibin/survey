@@ -28,6 +28,18 @@ export class SurveyResolver {
     return { survey, totalScore };
   }
 
+  @Query('getCompletedSurvey')
+  async getCompletedSurvey(
+    @Args('surveyId', { type: () => Int }) surveyId: number,
+  ) {
+    const survey = await this.surveyService.getCompletedSurvey(surveyId);
+    const totalScore = await this.surveyService.getTotalScoreBySurveyId(
+      surveyId,
+    );
+
+    return { survey, totalScore };
+  }
+
   @Mutation('createSurvey')
   async createSurvey(@Args('title') title: string) {
     return this.surveyService.createSurvey(title);

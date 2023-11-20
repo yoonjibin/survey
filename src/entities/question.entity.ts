@@ -17,7 +17,7 @@ export class QuestionEntity {
   question: string;
 
   @OneToMany(() => ChoiceEntity, (choice) => choice.question)
-  choice: ChoiceEntity[]; // 여기 수정
+  choice: ChoiceEntity[];
 
   @ManyToOne(() => SurveyEntity, (survey) => survey.question, {
     onDelete: 'CASCADE',
