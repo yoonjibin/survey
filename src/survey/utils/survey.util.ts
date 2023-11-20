@@ -12,22 +12,22 @@ export class SurveyUtil {
     private surveyRepository: Repository<SurveyEntity>,
   ) {}
 
-  async checkSurveyExist(id: number) {
+  async checkSurveyExist(surveyId: number) {
     const existingSurvey = await this.surveyRepository.exist({
-      where: { id: id },
+      where: { id: surveyId },
     });
     if (!existingSurvey) {
-      this.logger.error(`Survey with ID ${id} not found`);
+      this.logger.error(`Survey with ID ${surveyId} not found`);
       throw new ApolloError('존재하지 않는 설문지입니다.', 'SURVEY_NOT_FOUND', {
         customErrorCode: 404,
-        parameter: 'id',
+        parameter: 'surveyId',
       });
     }
   }
 
-  async getSurveyById(id: number) {
-    await this.checkSurveyExist(id);
-    return this.surveyRepository.findOne({ where: { id: id } });
+  async getSurveyById(surveyId: number) {
+    await this.checkSurveyExist(surveyId);
+    return this.surveyRepository.findOne({ where: { id: surveyId } });
   }
 
   async checkUnansweredQuestions(surveyId: number) {
@@ -52,7 +52,7 @@ export class SurveyUtil {
         'ANSWER_NOT_FOUND',
         {
           customErrorCode: 404,
-          parameter: 'id',
+          parameter: 'unansweredQuestionId',
         },
       );
     }
@@ -67,7 +67,7 @@ export class SurveyUtil {
         'SURVEY_ALREADY_COMPLETED',
         {
           customErrorCode: 400,
-          parameter: 'id',
+          parameter: 'surveyId',
         },
       );
     }
