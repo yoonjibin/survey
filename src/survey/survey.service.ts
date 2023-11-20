@@ -3,9 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { SurveyEntity } from 'src/entities/survey.entity';
 import { Repository } from 'typeorm';
 import { SurveyUtil } from './utils/survey.util';
-import { QuestionEntity } from 'src/entities/question.entity';
-import { ApolloError } from 'apollo-server-express';
-import { log } from 'console';
 
 @Injectable()
 export class SurveyService {
@@ -36,12 +33,14 @@ export class SurveyService {
       .where('survey.id = :surveyId', { surveyId })
       .getOne();
 
-    console.log(totalScoreQuery.question[0].choice);
-
-    const totalScore = totalScoreQuery.question
-      .flatMap((question) => question.choice)
-      .flatMap((choice) => choice.answer)
-      .reduce((acc, answer) => acc + answer.choice.score, 0);
+    const totalScore = totalScoreQuery.question.reduce((acc, question) => {
+      return (
+        acc +
+        question.choice.reduce((choiceScore, choice) => {
+          return choiceScore + (choice.answer[0] ? choice.score : 0);
+        }, 0)
+      );
+    }, 0);
 
     return totalScore;
   }
