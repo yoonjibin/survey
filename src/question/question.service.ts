@@ -37,7 +37,7 @@ export class QuestionService {
 
   async createQuestion(question: string, surveyId: number) {
     const survey = await this.surveyUtil.getSurveyById(surveyId);
-    const createdQuestion = await this.questionRepository.create({
+    const createdQuestion = this.questionRepository.create({
       question: question,
       survey: survey,
     });
