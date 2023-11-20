@@ -55,10 +55,16 @@ export class SurveyService {
   async getCompletedSurvey(surveyId: number) {
     await this.surveyUtil.checkSurveyExist(surveyId);
 
-    return await this.surveyRepository.findOne({
-      where: { id: surveyId, isCompleted: true },
-      relations: ['question', 'question.choice', 'question.choice.answer'],
-    });
+    return await this.surveyRepository
+      .createQueryBuilder('survey')
+      .leftJoinAndSelect('survey.question', 'question')
+      .leftJoinAndSelect('question.choice', 'choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .where('survey.id = :surveyId', { surveyId })
+      .andWhere('survey.isCompleted = :isCompleted', { isCompleted: true })
+      .orderBy('question.id', 'ASC')
+      .addOrderBy('choice.id', 'ASC')
+      .getOne();
   }
 
   async createSurvey(title: string) {
