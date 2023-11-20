@@ -14,19 +14,23 @@ export class SurveyService {
   ) {}
 
   async getAllSurvey() {
-    return this.surveyRepository.find({
-      relations: ['question', 'question.choice', 'question.choice.answer'],
-      order: { id: 'ASC' },
-    });
+    return this.surveyRepository
+      .createQueryBuilder('survey')
+      .leftJoinAndSelect('survey.question', 'question')
+      .leftJoinAndSelect('question.choice', 'choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .getMany();
   }
 
   async getSurveyById(surveyId: number) {
     await this.surveyUtil.checkSurveyExist(surveyId);
-    return await this.surveyRepository.findOne({
-      where: { id: surveyId },
-      relations: ['question', 'question.choice', 'question.choice.answer'],
-      order: { id: 'ASC' },
-    });
+    return await this.surveyRepository
+      .createQueryBuilder('survey')
+      .leftJoinAndSelect('survey.question', 'question')
+      .leftJoinAndSelect('question.choice', 'choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .where('survey.id = :surveyId', { surveyId })
+      .getOne();
   }
 
   async getTotalScoreBySurveyId(surveyId: number) {
