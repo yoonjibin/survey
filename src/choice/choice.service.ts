@@ -14,19 +14,26 @@ export class ChoiceService {
     private readonly choiceRepository: Repository<ChoiceEntity>,
   ) {}
   async getAllChoice() {
-    return await this.choiceRepository.find();
+    return await this.choiceRepository
+      .createQueryBuilder('choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .orderBy('choice.id', 'ASC')
+      .getMany();
   }
 
   async getAllChoiceByQuestionId(questionId: number) {
-    const question = await this.questionUtil.getQuestionById(questionId);
-    return await this.choiceRepository.find({
-      where: { question: { id: question.id } },
-    });
+    await this.questionUtil.checkQuestionExist(questionId);
+    return await this.choiceRepository
+      .createQueryBuilder('choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .where('choice.question = :questionId', { questionId: questionId })
+      .orderBy('choice.id', 'ASC')
+      .getMany();
   }
 
   async createChoice(text: string, score: number, questionId: number) {
     const question = await this.questionUtil.getQuestionById(questionId);
-    const createdChoice = await this.choiceRepository.create({
+    const createdChoice = this.choiceRepository.create({
       text: text,
       score: score,
       question: question,
@@ -40,7 +47,12 @@ export class ChoiceService {
       { id: choiceId },
       { text: text, score: score },
     );
-    return await this.choiceRepository.findOne({ where: { id: choiceId } });
+    return await this.choiceRepository
+      .createQueryBuilder('choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .where('choice.id = :choiceId', { choiceId: choiceId })
+      .orderBy('choice.id', 'ASC')
+      .getOne();
   }
 
   async deleteChoice(choiceId: number) {

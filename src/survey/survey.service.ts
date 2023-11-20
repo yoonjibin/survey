@@ -14,19 +14,23 @@ export class SurveyService {
   ) {}
 
   async getAllSurvey() {
-    return this.surveyRepository.find({
-      relations: ['question', 'question.choice', 'question.choice.answer'],
-      order: { id: 'ASC' },
-    });
+    return this.surveyRepository
+      .createQueryBuilder('survey')
+      .leftJoinAndSelect('survey.question', 'question')
+      .leftJoinAndSelect('question.choice', 'choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .getMany();
   }
 
   async getSurveyById(surveyId: number) {
     await this.surveyUtil.checkSurveyExist(surveyId);
-    return await this.surveyRepository.findOne({
-      where: { id: surveyId },
-      relations: ['question', 'question.choice', 'question.choice.answer'],
-      order: { id: 'ASC' },
-    });
+    return await this.surveyRepository
+      .createQueryBuilder('survey')
+      .leftJoinAndSelect('survey.question', 'question')
+      .leftJoinAndSelect('question.choice', 'choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .where('survey.id = :surveyId', { surveyId })
+      .getOne();
   }
 
   async getTotalScoreBySurveyId(surveyId: number) {
@@ -55,10 +59,16 @@ export class SurveyService {
   async getCompletedSurvey(surveyId: number) {
     await this.surveyUtil.checkSurveyExist(surveyId);
 
-    return await this.surveyRepository.findOne({
-      where: { id: surveyId, isCompleted: true },
-      relations: ['question', 'question.choice', 'question.choice.answer'],
-    });
+    return await this.surveyRepository
+      .createQueryBuilder('survey')
+      .leftJoinAndSelect('survey.question', 'question')
+      .leftJoinAndSelect('question.choice', 'choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .where('survey.id = :surveyId', { surveyId })
+      .andWhere('survey.isCompleted = :isCompleted', { isCompleted: true })
+      .orderBy('question.id', 'ASC')
+      .addOrderBy('choice.id', 'ASC')
+      .getOne();
   }
 
   async createSurvey(title: string) {
@@ -69,7 +79,7 @@ export class SurveyService {
   async updateSurvey(surveyId: number, title: string) {
     await this.surveyUtil.checkSurveyExist(surveyId);
     await this.surveyRepository.update({ id: surveyId }, { title: title });
-    return await this.surveyRepository.findOne({ where: { id: surveyId } });
+    return await this.getSurveyById(surveyId);
   }
   async updateSurveyCompleted(surveyId: number) {
     await this.surveyUtil.checkSurveyExist(surveyId);
@@ -77,7 +87,7 @@ export class SurveyService {
     await this.surveyUtil.checkSurveyCompletion(surveyId);
 
     await this.surveyRepository.update({ id: surveyId }, { isCompleted: true });
-    return await this.surveyRepository.findOne({ where: { id: surveyId } });
+    return await this.getSurveyById(surveyId);
   }
 
   async deleteSurvey(surveyId: number) {
