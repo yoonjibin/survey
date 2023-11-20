@@ -12,14 +12,14 @@ type SurveyWithTotalScore {
 
 type Query {
   getAllSurvey: [Survey]
-  getSurveyById(id: ID!): Survey
+  getSurveyById(surveyId: ID!): Survey
   getCompletedSurvey(surveyId: ID!): SurveyWithTotalScore
   getTotalScoreBySurveyId(surveyId: ID!): SurveyWithTotalScore
 }
 
 type Mutation {
   createSurvey(title: String!): Survey
-  updateSurvey(id: ID!, title: String!): Survey
+  updateSurvey(surveyId: ID!, title: String!): Survey
   updateSurveyCompleted(surveyId: ID!): Survey
-  deleteSurvey(id: ID!): Survey
+  deleteSurvey(surveyId: ID!): Survey
 }

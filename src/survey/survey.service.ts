@@ -20,10 +20,10 @@ export class SurveyService {
     });
   }
 
-  async getSurveyById(id: number) {
-    await this.surveyUtil.checkSurveyExist(id);
+  async getSurveyById(surveyId: number) {
+    await this.surveyUtil.checkSurveyExist(surveyId);
     return await this.surveyRepository.findOne({
-      where: { id: id },
+      where: { id: surveyId },
       relations: ['question', 'question.choice', 'question.choice.answer'],
       order: { id: 'ASC' },
     });
@@ -66,10 +66,10 @@ export class SurveyService {
     return await this.surveyRepository.save(survey);
   }
 
-  async updateSurvey(id: number, title: string) {
-    await this.surveyUtil.checkSurveyExist(id);
-    await this.surveyRepository.update({ id: id }, { title: title });
-    return await this.surveyRepository.findOne({ where: { id: id } });
+  async updateSurvey(surveyId: number, title: string) {
+    await this.surveyUtil.checkSurveyExist(surveyId);
+    await this.surveyRepository.update({ id: surveyId }, { title: title });
+    return await this.surveyRepository.findOne({ where: { id: surveyId } });
   }
   async updateSurveyCompleted(surveyId: number) {
     await this.surveyUtil.checkSurveyExist(surveyId);
@@ -80,8 +80,8 @@ export class SurveyService {
     return await this.surveyRepository.findOne({ where: { id: surveyId } });
   }
 
-  async deleteSurvey(id: number) {
-    await this.surveyUtil.checkSurveyExist(id);
-    await this.surveyRepository.delete({ id: id });
+  async deleteSurvey(surveyId: number) {
+    await this.surveyUtil.checkSurveyExist(surveyId);
+    await this.surveyRepository.delete({ id: surveyId });
   }
 }

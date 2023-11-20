@@ -11,8 +11,8 @@ export class SurveyResolver {
   }
 
   @Query('getSurveyById')
-  async getSurveyById(@Args('id', { type: () => Int }) id: number) {
-    return this.surveyService.getSurveyById(id);
+  async getSurveyById(@Args('surveyId', { type: () => Int }) surveyId: number) {
+    return this.surveyService.getSurveyById(surveyId);
   }
 
   @Query('getTotalScoreBySurveyId')
@@ -46,10 +46,10 @@ export class SurveyResolver {
 
   @Mutation('updateSurvey')
   async updateSurvey(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('surveyId', { type: () => Int }) surveyId: number,
     @Args('title') title: string,
   ) {
-    return this.surveyService.updateSurvey(id, title);
+    return this.surveyService.updateSurvey(surveyId, title);
   }
 
   @Mutation('updateSurveyCompleted')
@@ -60,7 +60,7 @@ export class SurveyResolver {
   }
 
   @Mutation('deleteSurvey')
-  async deleteSurvey(@Args('id', { type: () => Int }) id: number) {
-    this.surveyService.deleteSurvey(id);
+  async deleteSurvey(@Args('surveyId', { type: () => Int }) surveyId: number) {
+    this.surveyService.deleteSurvey(surveyId);
   }
 }
