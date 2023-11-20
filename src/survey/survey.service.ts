@@ -14,12 +14,19 @@ export class SurveyService {
   ) {}
 
   async getAllSurvey() {
-    return this.surveyRepository.find({ relations: ['question'] });
+    return this.surveyRepository.find({
+      relations: ['question', 'question.choice', 'question.choice.answer'],
+      order: { id: 'ASC' },
+    });
   }
 
   async getSurveyById(id: number) {
     await this.surveyUtil.checkSurveyExist(id);
-    return await this.surveyRepository.findOne({ where: { id: id } });
+    return await this.surveyRepository.findOne({
+      where: { id: id },
+      relations: ['question', 'question.choice', 'question.choice.answer'],
+      order: { id: 'ASC' },
+    });
   }
 
   async getTotalScoreBySurveyId(surveyId: number) {

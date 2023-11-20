@@ -2,6 +2,7 @@ type Choice {
   id: ID!
   text: String!
   score: Int!
+  answer: [Answer]
 }
 
 type Query {
