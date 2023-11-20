@@ -79,7 +79,7 @@ export class SurveyService {
   async updateSurvey(surveyId: number, title: string) {
     await this.surveyUtil.checkSurveyExist(surveyId);
     await this.surveyRepository.update({ id: surveyId }, { title: title });
-    return await this.surveyRepository.findOne({ where: { id: surveyId } });
+    return await this.getSurveyById(surveyId);
   }
   async updateSurveyCompleted(surveyId: number) {
     await this.surveyUtil.checkSurveyExist(surveyId);
@@ -87,7 +87,7 @@ export class SurveyService {
     await this.surveyUtil.checkSurveyCompletion(surveyId);
 
     await this.surveyRepository.update({ id: surveyId }, { isCompleted: true });
-    return await this.surveyRepository.findOne({ where: { id: surveyId } });
+    return await this.getSurveyById(surveyId);
   }
 
   async deleteSurvey(surveyId: number) {
