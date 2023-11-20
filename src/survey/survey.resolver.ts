@@ -32,7 +32,12 @@ export class SurveyResolver {
   async getCompletedSurvey(
     @Args('surveyId', { type: () => Int }) surveyId: number,
   ) {
-    return this.surveyService.getCompletedSurvey(surveyId);
+    const survey = await this.surveyService.getCompletedSurvey(surveyId);
+    const totalScore = await this.surveyService.getTotalScoreBySurveyId(
+      surveyId,
+    );
+
+    return { survey, totalScore };
   }
 
   @Mutation('createSurvey')

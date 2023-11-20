@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { SurveyUtil } from './utils/survey.util';
 import { QuestionEntity } from 'src/entities/question.entity';
 import { ApolloError } from 'apollo-server-express';
+import { log } from 'console';
 
 @Injectable()
 export class SurveyService {
@@ -16,7 +17,7 @@ export class SurveyService {
   ) {}
 
   async getAllSurvey() {
-    return this.surveyRepository.find();
+    return this.surveyRepository.find({ relations: ['question'] });
   }
 
   async getSurveyById(id: number) {
@@ -35,6 +36,8 @@ export class SurveyService {
       .where('survey.id = :surveyId', { surveyId })
       .getOne();
 
+    console.log(totalScoreQuery.question[0].choice);
+
     const totalScore = totalScoreQuery.question
       .flatMap((question) => question.choice)
       .flatMap((choice) => choice.answer)
@@ -46,14 +49,10 @@ export class SurveyService {
   async getCompletedSurvey(surveyId: number) {
     await this.surveyUtil.checkSurveyExist(surveyId);
 
-    const survey = await this.surveyRepository.findOne({
+    return await this.surveyRepository.findOne({
       where: { id: surveyId, isCompleted: true },
       relations: ['question', 'question.choice', 'question.choice.answer'],
     });
-
-    const totalScore = this.getTotalScoreBySurveyId(surveyId);
-
-    return [survey, totalScore];
   }
 
   async createSurvey(title: string) {
