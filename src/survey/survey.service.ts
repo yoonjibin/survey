@@ -43,6 +43,19 @@ export class SurveyService {
     return totalScore;
   }
 
+  async getCompletedSurvey(surveyId: number) {
+    await this.surveyUtil.checkSurveyExist(surveyId);
+
+    const survey = await this.surveyRepository.findOne({
+      where: { id: surveyId, isCompleted: true },
+      relations: ['question', 'question.choice', 'question.choice.answer'],
+    });
+
+    const totalScore = this.getTotalScoreBySurveyId(surveyId);
+
+    return [survey, totalScore];
+  }
+
   async createSurvey(title: string) {
     const survey = this.surveyRepository.create({ title: title });
     return await this.surveyRepository.save(survey);
