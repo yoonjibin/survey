@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { SurveyEntity } from 'src/entities/survey.entity';
 import { Repository } from 'typeorm';
 import { SurveyUtil } from './utils/survey.util';
+import { ApolloError } from 'apollo-server-express';
 
 @Injectable()
 export class SurveyService {
@@ -57,7 +58,19 @@ export class SurveyService {
   }
 
   async getCompletedSurvey(surveyId: number) {
-    await this.surveyUtil.checkSurveyExist(surveyId);
+    const survey = await this.surveyUtil.getSurveyById(surveyId);
+
+    if (!survey.isCompleted) {
+      this.logger.error(`${surveyId}번 설문지는 완료되지 않은 설문입니다.`);
+      throw new ApolloError(
+        `${surveyId}번 설문지는 완료되지 않은 설문입니다`,
+        'BAD_REQUEST',
+        {
+          customErrorCode: 400,
+          parameter: 'id',
+        },
+      );
+    }
 
     return await this.surveyRepository
       .createQueryBuilder('survey')
