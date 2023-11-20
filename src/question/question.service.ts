@@ -14,14 +14,25 @@ export class QuestionService {
     private readonly questionRepository: Repository<QuestionEntity>,
   ) {}
   async getAllQuestion() {
-    return await this.questionRepository.find();
+    return await this.questionRepository
+      .createQueryBuilder('question')
+      .leftJoinAndSelect('question.choice', 'choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .orderBy('question.id', 'ASC')
+      .addOrderBy('choice.id', 'ASC')
+      .getMany();
   }
 
   async getAllQuestionBySurveyId(surveyId: number) {
-    const survey = await this.surveyUtil.getSurveyById(surveyId);
-    return await this.questionRepository.find({
-      where: { survey: { id: survey.id } },
-    });
+    const survey = await this.surveyUtil.checkSurveyExist(surveyId);
+    return await this.questionRepository
+      .createQueryBuilder('question')
+      .leftJoinAndSelect('question.choice', 'choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .where('question.survey = :surveyId', { surveyId: surveyId })
+      .orderBy('question.id', 'ASC')
+      .addOrderBy('choice.id', 'ASC')
+      .getMany();
   }
 
   async createQuestion(question: string, surveyId: number) {
@@ -39,7 +50,13 @@ export class QuestionService {
       { id: questionId },
       { question: question },
     );
-    return await this.questionRepository.findOne({ where: { id: questionId } });
+    return await this.questionRepository
+      .createQueryBuilder('question')
+      .leftJoinAndSelect('question.choice', 'choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .where('question.id = :questionId', { questionId: questionId })
+      .orderBy('choice.id', 'ASC')
+      .getOne();
   }
 
   async deleteQuestion(questionId: number) {
