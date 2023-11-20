@@ -28,6 +28,13 @@ export class SurveyResolver {
     return { survey, totalScore };
   }
 
+  @Query('getCompletedSurvey')
+  async getCompletedSurvey(
+    @Args('surveyId', { type: () => Int }) surveyId: number,
+  ) {
+    return this.surveyService.getCompletedSurvey(surveyId);
+  }
+
   @Mutation('createSurvey')
   async createSurvey(@Args('title') title: string) {
     return this.surveyService.createSurvey(title);
