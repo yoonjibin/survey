@@ -35,6 +35,17 @@ export class QuestionService {
       .getMany();
   }
 
+  async getQuestionByQuestionId(questionId: number) {
+    await this.questionUtil.checkQuestionExist(questionId);
+    return await this.questionRepository
+      .createQueryBuilder('question')
+      .leftJoinAndSelect('question.choice', 'choice')
+      .leftJoinAndSelect('choice.answer', 'answer')
+      .where('question.id = :questionId', { questionId: questionId })
+      .orderBy('choice.id', 'ASC')
+      .getOne();
+  }
+
   async createQuestion(question: string, surveyId: number) {
     const survey = await this.surveyUtil.getSurveyById(surveyId);
     const createdQuestion = this.questionRepository.create({

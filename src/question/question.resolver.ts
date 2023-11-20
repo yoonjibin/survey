@@ -17,6 +17,13 @@ export class QuestionResolver {
     return await this.questionService.getAllQuestionBySurveyId(surveyId);
   }
 
+  @Query('getQuestionByQuestionId')
+  async getQuestionByQuestionId(
+    @Args('questionId', { type: () => Int }) questionId: number,
+  ) {
+    return await this.questionService.getQuestionByQuestionId(questionId);
+  }
+
   @Mutation('createQuestion')
   async createQuestion(
     @Args('question') question: string,
