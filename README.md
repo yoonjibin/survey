@@ -58,7 +58,7 @@ type Answer {
 }
 ```
 
-# 기능들
+# 기능
 
 ### Query
 
@@ -155,3 +155,7 @@ or
 ```bash
 npm start
 ```
+
+### 7. 테스트한다.
+
+http://localhost:4000/graphql 에 접속하여 테스트한다.
