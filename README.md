@@ -5,8 +5,7 @@
 # 설계
 
 ### ERD
-
-![Alt text](image.png)
+![Untitled (1)](https://github.com/yoonjibin/survey/assets/80810278/cf77e410-eea3-4770-9fff-cabc97953c94)
 
 https://dbdiagram.io/d/655330177d8bbd646523b42e
 
