@@ -73,7 +73,7 @@ type Query {
   getAllQuestionBySurveyId(surveyId: ID): [Question]
   getQuestionByQuestionId(questionId: ID): Question
   getAllSurvey: [Survey]
-  getSurveyById(surveyId: ID!): Survey
+  getSurveyById(surveyId: ID!): SurveyWithTotalScore
   getCompletedSurvey(surveyId: ID!): SurveyWithTotalScore
   getTotalScoreBySurveyId(surveyId: ID!): SurveyWithTotalScore
 }

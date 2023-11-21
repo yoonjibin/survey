@@ -12,7 +12,12 @@ export class SurveyResolver {
 
   @Query('getSurveyById')
   async getSurveyById(@Args('surveyId', { type: () => Int }) surveyId: number) {
-    return this.surveyService.getSurveyById(surveyId);
+    const survey = await this.surveyService.getSurveyById(surveyId);
+    const totalScore = await this.surveyService.getTotalScoreBySurveyId(
+      surveyId,
+    );
+
+    return { survey, totalScore };
   }
 
   @Query('getTotalScoreBySurveyId')

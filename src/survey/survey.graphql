@@ -12,7 +12,7 @@ type SurveyWithTotalScore {
 
 type Query {
   getAllSurvey: [Survey]
-  getSurveyById(surveyId: ID!): Survey
+  getSurveyById(surveyId: ID!): SurveyWithTotalScore
   getCompletedSurvey(surveyId: ID!): SurveyWithTotalScore
   getTotalScoreBySurveyId(surveyId: ID!): SurveyWithTotalScore
 }
