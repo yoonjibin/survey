@@ -1,73 +1,155 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# 프로젝트 개요
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+마음연구소 백엔드 과제인 설문지 서비스입니다.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# 설계
 
-## Description
+### ERD
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+![Alt text](image.png)
 
-## Installation
+https://dbdiagram.io/d/655330177d8bbd646523b42e
 
-```bash
-$ npm install
+### GraphQlModel
+
+설문지
+
+```graphql
+type Survey {
+  id: ID!
+  title: String!
+  isCompleted: Boolean
+  question: [Question]
+}
+
+type SurveyWithTotalScore {
+  survey: Survey
+  totalScore: Int
+}
 ```
 
-## Running the app
+문항
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```graphql
+type Question {
+  id: ID!
+  question: String!
+  choice: [Choice]
+}
 ```
 
-## Test
+선택지
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```graphql
+type Choice {
+  id: ID!
+  text: String!
+  score: Int!
+  answer: [Answer]
+}
 ```
 
-## Support
+답변
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```graphql
+type Answer {
+  id: ID!
+  choice: Choice
+}
+```
 
-## Stay in touch
+# 기능들
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Query
 
-## License
+```graphql
+type Query {
+  getAnswerByQuestionId(questionId: ID!): Answer
+  getAllAnswer: [Answer]
+  getAllChoice: [Choice]
+  getAllChoiceByQuestionId(questionId: ID!): [Choice]
+  getChoiceByChoiceId(choiceId: ID!): Choice
+  getAllQuestion: [Question]
+  getAllQuestionBySurveyId(surveyId: ID): [Question]
+  getQuestionByQuestionId(questionId: ID): Question
+  getAllSurvey: [Survey]
+  getSurveyById(surveyId: ID!): Survey
+  getCompletedSurvey(surveyId: ID!): SurveyWithTotalScore
+  getTotalScoreBySurveyId(surveyId: ID!): SurveyWithTotalScore
+}
+```
 
-Nest is [MIT licensed](LICENSE).
+### Mutation
+
+```graphql
+type Mutation {
+  createAnswer(choiceId: ID!): Answer
+  updateAnswer(answerId: ID!, choiceId: ID!): Answer
+  deleteAnswer(answerId: ID!): Answer
+  createChoice(text: String!, score: Int!, questionId: ID!): Choice
+  updateChoice(text: String!, score: Int!, choiceId: ID!): Choice
+  deleteChoice(choiceId: ID!): Choice
+  createQuestion(question: String!, surveyId: ID!): Question
+  updateQuestion(question: String!, questionId: ID!): Question
+  deleteQuestion(questionId: ID!): Question
+  createSurvey(title: String!): Survey
+  updateSurvey(surveyId: ID!, title: String!): Survey
+  updateSurveyCompleted(surveyId: ID!): Survey
+  deleteSurvey(surveyId: ID!): Survey
+}
+```
+
+# 실행방법
+
+### 1. 프로젝트를 클론합니다.
+
+```bash
+git clone https://github.com/yoonjibin/survey.git
+```
+
+### 2. 프로젝트 폴더로 이동합니다.
+
+```bash
+cd your-repo
+```
+
+### 3. .env.example파일을 복사하여 새 .env파일을 만듭니다.
+
+```bash
+cp .env.example .env
+```
+
+### 4. .env파일을 열어 필요한 환경 변수를 설정합니다.
+
+```
+# Database
+DB_HOST=localhost
+DB_PORT=5432
+DB_DATABASE= {your_database}
+DB_USERNAME= {your_username}
+DB_PASSWORD= {your_password}
+```
+
+### 5. 필요한 종속성을 설치합니다.
+
+```bash
+yanr install
+```
+
+or
+
+```bash
+npm install
+```
+
+### 6. 애플리케이션을 실행합니다.
+
+```bash
+yarn start
+```
+
+or
+
+```bash
+npm start
+```
