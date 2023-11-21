@@ -5,6 +5,7 @@
 # 설계
 
 ### ERD
+
 ![Untitled (1)](https://github.com/yoonjibin/survey/assets/80810278/cf77e410-eea3-4770-9fff-cabc97953c94)
 
 https://dbdiagram.io/d/655330177d8bbd646523b42e
@@ -128,6 +129,8 @@ DB_DATABASE= {your_database}
 DB_USERNAME= {your_username}
 DB_PASSWORD= {your_password}
 ```
+
+🙏🏻 Postgres에 꼭 DB를 만들어주십쇼.
 
 ### 5. 필요한 종속성을 설치합니다.
 
