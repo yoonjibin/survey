@@ -135,7 +135,7 @@ DB_PASSWORD= {your_password}
 ### 5. 필요한 종속성을 설치합니다.
 
 ```bash
-yanr install
+yarn install
 ```
 
 or
